@@ -1,0 +1,29 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "jsx": "react-jsx",
+        "moduleResolution": "Bundler",
+        "types": [
+            "vite/client"
+        ],
+        "rootDir": "src",
+        "baseUrl": ".",
+        "paths": {
+            "@updau/core": [
+                "../../packages/core/src"
+            ],
+            "@updau/protocol": [
+                "../../packages/protocol/src"
+            ],
+            "@updau/transport": [
+                "../../packages/transport/src"
+            ],
+            "@updau/durak": [
+                "../../packages/durak/src"
+            ]
+        }
+    },
+    "include": [
+        "src"
+    ]
+}

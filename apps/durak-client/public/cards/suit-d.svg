@@ -1,0 +1,16 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(16,16)">
+        
+      <g fill="red" transform="scale(0.9)">
+        <text 
+            x="0" 
+            y="0" 
+            font-size="28" 
+            font-family="Arial, sans-serif" 
+            text-anchor="middle" 
+            dominant-baseline="central"
+            dy="1"
+        >♦</text>
+      </g>
+      </g>
+    </svg>

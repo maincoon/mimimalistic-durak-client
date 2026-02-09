@@ -1,0 +1,14 @@
+{
+    "name": "asset-generator",
+    "version": "1.0.0",
+    "description": "Utility for generating SVG assets for the Durak game",
+    "main": "dist/index.js",
+    "scripts": {
+        "build": "tsc",
+        "generate": "node dist/index.js"
+    },
+    "devDependencies": {
+        "@types/node": "^20.0.0",
+        "typescript": "^5.0.0"
+    }
+}

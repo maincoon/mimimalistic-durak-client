@@ -1,0 +1,75 @@
+.card {
+    width: 64px;
+    height: 92px;
+    border-radius: 6px;
+    /* Slightly tighter radius for image */
+    background: transparent;
+    border: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    padding: 0;
+    overflow: hidden;
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    pointer-events: none;
+    /* Let clicks pass to button */
+}
+
+/* Remove text-based styles if no longer used, or keep for fallback */
+.card.face {
+    background: #fdfdfd;
+    /* display: grid... removed */
+}
+
+.card.face .rank {
+    font-family: "Space Mono", monospace;
+    font-weight: 700;
+}
+
+.card.face .suit {
+    font-size: 1.4rem;
+}
+
+.card.red {
+    color: #d9503f;
+}
+
+.card.black {
+    color: #1a1a1a;
+}
+
+.card.back {
+    background: repeating-linear-gradient(45deg,
+            rgba(255, 255, 255, 0.15) 0,
+            rgba(255, 255, 255, 0.15) 6px,
+            transparent 6px,
+            transparent 12px),
+        #1b3b2a;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 26px rgba(0, 0, 0, 0.3);
+}
+
+.card.selected {
+    outline: 2px solid var(--accent);
+    transform: translateY(-6px);
+    box-shadow: 0 16px 30px rgba(0, 0, 0, 0.35);
+}
+
+.card.disabled {
+    filter: brightness(0.65);
+    cursor: not-allowed;
+    /* Allow transforms so layout transitions work */
+}
+
+.card.disabled:hover {
+    cursor: not-allowed;
+    /* Allow hover effects (popup) so cards can be inspected */
+}

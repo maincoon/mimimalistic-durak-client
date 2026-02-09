@@ -1,0 +1,115 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:wght@300;600;900&family=Space+Mono:wght@400;700&display=swap");
+@import "./styles/card.css";
+@import "./styles/table.css";
+@import "./styles/matching.css";
+
+:root {
+    --bg-deep: #0b1c15;
+    --bg-mid: #12352b;
+    --bg-bright: #1c5b42;
+    --accent: #f9b85d;
+    --accent-2: #f66f4b;
+    --surface: rgba(255, 255, 255, 0.08);
+    --text: #f4f1e9;
+    --text-muted: rgba(244, 241, 233, 0.7);
+    --danger: #f04e4e;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Fraunces", serif;
+    background: radial-gradient(circle at top, #1d5b45 0%, #0b1c15 60%);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at 20% 20%, rgba(249, 184, 93, 0.15), transparent 55%),
+        radial-gradient(circle at 80% 10%, rgba(246, 111, 75, 0.12), transparent 50%);
+    pointer-events: none;
+}
+
+button {
+    font-family: "Space Mono", monospace;
+    border: none;
+    cursor: pointer;
+    color: var(--text);
+}
+
+.app {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.app-header h1 {
+    font-size: 2.2rem;
+    letter-spacing: 0.02em;
+}
+
+.status {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: var(--surface);
+    font-family: "Space Mono", monospace;
+}
+
+.status .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px rgba(249, 184, 93, 0.8);
+}
+
+.panel {
+    padding: 32px;
+    background: var(--surface);
+    border-radius: 20px;
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.panel h2 {
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+}
+
+.panel p {
+    color: var(--text-muted);
+}
+
+.panel.error {
+    border-color: rgba(240, 78, 78, 0.6);
+}
+
+@media (max-width: 768px) {
+    .app {
+        padding: 16px;
+    }
+
+    .app-header {
+        flex-direction: column;
+        gap: 12px;
+    }
+}

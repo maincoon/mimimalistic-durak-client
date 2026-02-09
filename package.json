@@ -1,0 +1,24 @@
+{
+    "name": "updau-client",
+    "private": true,
+    "version": "0.1.0",
+    "workspaces": [
+        "packages/*",
+        "apps/*",
+        "tools/*"
+    ],
+    "engines": {
+        "node": ">=24.11.1"
+    },
+    "scripts": {
+        "dev": "npm -w apps/durak-client run dev",
+        "build": "npm -w apps/durak-client run build",
+        "test": "vitest run",
+        "test:watch": "vitest"
+    },
+    "devDependencies": {
+        "jsdom": "^28.0.0",
+        "typescript": "^5.6.3",
+        "vitest": "^1.6.0"
+    }
+}
