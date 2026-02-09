@@ -14,7 +14,7 @@ export function parseWaitInfo(element: Element): WaitInfo {
         uid: readOptionalText(element.getAttribute("uid")),
         tick: parseOptionalNumber(element.getAttribute("tick")),
         value: parseOptionalNumber(element.getAttribute("value")),
-        timeBank: parseOptionalNumber(element.getAttribute("timeBank"))
+        timeBank: parseOptionalNumber(element.getAttribute("timeBank") || element.getAttribute("timebank"))
     };
 }
 

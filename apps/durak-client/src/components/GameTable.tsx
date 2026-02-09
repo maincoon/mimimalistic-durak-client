@@ -10,7 +10,7 @@ import { TimerDisplay } from "./TimerDisplay";
 
 type Props = {
     table?: TableState;
-    timer?: { value: number; timeBank: number; box: number };
+    timer?: { value: number; timeBank: number; box: number; name?: string };
     hand: Card[];
     availables: AvailableAction[];
     turns: TurnInfo[];
@@ -149,12 +149,7 @@ export function GameTable({
                 <OpponentHand count={opponentCount} />
                 <div className="table-status">
                     <TrumpIndicator suit={table?.trump} />
-                    {timer && (
-                        <>
-                            <TimerDisplay seconds={timer.value} label="Action" />
-                            <TimerDisplay seconds={timer.timeBank} label="Bank" />
-                        </>
-                    )}
+                    <TimerDisplay seconds={timer?.value} label={timer?.name ?? "Timer"} />
                     <DeckCounter count={table?.deckCount} />
                 </div>
             </div>

@@ -7,7 +7,7 @@ export function TimerDisplay({ seconds, label = "Timer" }: Props) {
     return (
         <div className="timer">
             <span>{label}</span>
-            <strong>{seconds ?? 0}</strong>
+            <strong>{seconds !== undefined ? seconds : "—"}</strong>
         </div>
     );
 }

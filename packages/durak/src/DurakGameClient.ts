@@ -19,6 +19,7 @@ export type DurakClientState = {
     turns: TurnInfo[];
     finishedRound: boolean;
     timer?: {
+        name: string;
         box: number;
         value: number;
         timeBank: number;
@@ -131,20 +132,51 @@ export class DurakGameClient {
     }
 
     handleWait(event: WaitEvent): void {
+        const name = event.name ?? this.state.timer?.name ?? "wait";
         if (event.box !== undefined && event.value !== undefined) {
             this.state.timer = {
+                name,
                 box: event.box,
                 value: event.value,
                 timeBank: event.timeBank ?? 0
             };
         } else if (this.state.timer && event.value !== undefined) {
-            // Update existing timer if box is missing but implied?
-            // Usually wait event has box. If not, maybe ignore or assume current?
-            // Protocol says <wait ... box="1" ... />
-            // If missing, arguably we might keep previous box but update value
-            this.state.timer.value = event.value;
+            this.state.timer = {
+                ...this.state.timer,
+                value: event.value,
+                name: name,
+                timeBank: event.timeBank !== undefined ? event.timeBank : this.state.timer.timeBank
+            };
         }
         this.notify();
+    }
+
+    handleWaitStop(): void {
+        this.state.timer = undefined;
+        this.notify();
+    }
+
+    tick(): void {
+        if (!this.state.timer) {
+            return;
+        }
+
+        const { value, timeBank } = this.state.timer;
+        let newTimer = { ...this.state.timer };
+        let changed = false;
+
+        if (value > 0) {
+            newTimer.value = value - 1;
+            changed = true;
+        } else if (timeBank > 0) {
+            newTimer.timeBank = timeBank - 1;
+            changed = true;
+        }
+
+        if (changed) {
+            this.state.timer = newTimer;
+            this.notify();
+        }
     }
 
     private normalizeTurn(turn: TurnInfo): TurnInfo {

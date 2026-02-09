@@ -50,6 +50,11 @@ export class DurakGameController {
                 return;
             }
 
+            if (action.cmd === "waitstop") {
+                this.client.handleWaitStop();
+                return;
+            }
+
             if (action.cmd !== "game" && action.cmd !== "wait") {
                 return;
             }
@@ -61,7 +66,10 @@ export class DurakGameController {
             const availables = root.querySelector("availables");
             const finish = root.querySelector("finishround");
             const gamestate = root.querySelector("gamestate");
-            const wait = action.cmd === "wait" ? root : root.querySelector("wait");
+
+            // Prefer child <wait> element, fallback to root if attributes are present directly (legacy support or flat structure)
+            const waitChild = root.querySelector("wait");
+            const wait = waitChild ? waitChild : (action.cmd === "wait" ? root : undefined);
 
             if (table) {
                 this.client.handleTable(parseTableEvent(table));
@@ -148,6 +156,11 @@ export class DurakGameController {
             if (parsed.length > 0) {
                 this.client.handleCards({ cards: parsed, add: false });
             }
+        }
+
+        const wait = root.querySelector("wait") || gamestate.querySelector("wait");
+        if (wait) {
+            this.client.handleWait(parseWaitEvent(wait));
         }
     }
 

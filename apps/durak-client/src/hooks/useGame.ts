@@ -23,6 +23,18 @@ export function useGame(transport: TransportLike, enabled: boolean) {
         if (!enabled) {
             return;
         }
+
+        const interval = setInterval(() => {
+            client.tick();
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [client, enabled]);
+
+    useEffect(() => {
+        if (!enabled) {
+            return;
+        }
         controller.attach();
         return () => controller.detach();
     }, [controller, enabled]);
