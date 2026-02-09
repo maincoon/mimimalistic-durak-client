@@ -1,0 +1,85 @@
+<svg width="100" height="140" viewBox="0 0 100 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+    <defs>
+      <linearGradient id="cardFaceGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+        <stop offset="100%" stop-color="#f6f6f6" stop-opacity="1"/>
+      </linearGradient>
+
+      <filter id="innerShadow" x="-50%" y="-50%" width="200%" height="200%">
+        <feOffset dx="0" dy="1"/>
+        <feGaussianBlur stdDeviation="2" result="offset-blur"/>
+        <feComposite operator="out" in="SourceGraphic" in2="offset-blur" result="inverse"/>
+        <feFlood flood-color="#000" flood-opacity="0.12" result="color"/>
+        <feComposite operator="in" in="color" in2="inverse" result="shadow"/>
+        <feComposite operator="over" in="shadow" in2="SourceGraphic"/>
+      </filter>
+
+      <radialGradient id="centerEmblem" cx="50%" cy="40%" r="40%">
+        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.06"/>
+        <stop offset="60%" stop-color="#bfbfbf" stop-opacity="0.02"/>
+        <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+
+    <!-- card base -->
+    <rect x="0.75" y="0.75" width="98.5" height="138.5" rx="8" fill="url(#cardFaceGrad)" stroke="#111" stroke-width="1.5" filter="url(#innerShadow)"/>
+
+    <!-- Top-Left Corner: Rank on top, Suit below -->
+    <g transform="translate(12, 22)">
+        <text x="0" y="0" font-size="20" fill="red" font-family="Arial, sans-serif" font-weight="700" text-anchor="middle">J</text>
+        <g transform="translate(0, 18)">
+             
+      <g fill="red" transform="scale(0.6)">
+        <text 
+            x="0" 
+            y="0" 
+            font-size="28" 
+            font-family="Arial, sans-serif" 
+            text-anchor="middle" 
+            dominant-baseline="central"
+            dy="1"
+        >♦</text>
+      </g>
+        </g>
+    </g>
+
+    <!-- Center Suit -->
+    <g transform="translate(50,70)">
+        <circle r="14" fill="url(#centerEmblem)" opacity="0.14" />
+        
+      <g fill="red" transform="scale(1)">
+        <text 
+            x="0" 
+            y="0" 
+            font-size="28" 
+            font-family="Arial, sans-serif" 
+            text-anchor="middle" 
+            dominant-baseline="central"
+            dy="1"
+        >♦</text>
+      </g>
+    </g>
+
+    <!-- Bottom-Right Corner: Mirrored (Rotated 180) -->
+    <g transform="translate(88, 118) rotate(180)">
+        <text x="0" y="0" font-size="20" fill="red" font-family="Arial, sans-serif" font-weight="700" text-anchor="middle">J</text>
+        <g transform="translate(0, 18)">
+             
+      <g fill="red" transform="scale(0.6)">
+        <text 
+            x="0" 
+            y="0" 
+            font-size="28" 
+            font-family="Arial, sans-serif" 
+            text-anchor="middle" 
+            dominant-baseline="central"
+            dy="1"
+        >♦</text>
+      </g>
+        </g>
+    </g>
+
+    <!-- decorative accents replaced with subtle vignette (no small stroked ellipses to avoid rendering artifacts) -->
+    <rect x="4" y="8" width="92" height="124" rx="6" fill="none" stroke="none"/>
+
+  </svg>
