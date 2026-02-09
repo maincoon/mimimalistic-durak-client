@@ -113,3 +113,25 @@ button {
         gap: 12px;
     }
 }
+
+.install-icon-button {
+    font-size: 1.5rem;
+    background: none;
+    padding: 0 4px;
+    border-radius: 50%;
+    transition: transform 0.2s, background-color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+}
+
+.install-icon-button:hover {
+    transform: scale(1.1);
+    background-color: var(--surface);
+}
+
+.install-icon-button:active {
+    transform: scale(0.95);
+}

@@ -15,6 +15,7 @@ import { MatchingScreen } from "./components/MatchingScreen";
 import { GameTable } from "./components/GameTable";
 import { GameOverScreen } from "./components/GameOverScreen";
 import { ErrorDisplay } from "./components/ErrorDisplay";
+import { InstallPWA } from "./components/InstallPWA";
 import "./index.css";
 
 export function App() {
@@ -190,7 +191,10 @@ export function App() {
     return (
         <div className="app">
             <header className="app-header">
-                <h1>UpDAU Durak</h1>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                    <h1>UpDAU Durak</h1>
+                    <InstallPWA />
+                </div>
                 <ConnectionStatus state={connectionState} />
             </header>
 
