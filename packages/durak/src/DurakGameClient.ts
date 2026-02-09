@@ -87,19 +87,23 @@ export class DurakGameClient {
             }
         }
 
-        // Remove cards from my hand only if I played them
-        if (this.state.myBox !== undefined && turn.box === this.state.myBox) {
-            if (turn.action === TurnAction.ATTACK) {
-                if (turn.attackCard) {
-                    this.removeCardFromHand(turn.attackCard);
-                } else if (turn.card) {
-                    this.removeCardFromHand(turn.card);
-                }
-            }
-            if (turn.action === TurnAction.DEFEND && turn.defendCard) {
-                this.removeCardFromHand(turn.defendCard);
+        const playedCards: Card[] = [];
+        if (turn.action === TurnAction.ATTACK) {
+            if (turn.attackCard) {
+                playedCards.push(turn.attackCard);
+            } else if (turn.card) {
+                playedCards.push(turn.card);
             }
         }
+        if (turn.action === TurnAction.DEFEND && turn.defendCard) {
+            playedCards.push(turn.defendCard);
+        }
+
+        playedCards.forEach((card) => {
+            if (this.state.hand.some((item) => item.rank === card.rank && item.suit === card.suit)) {
+                this.removeCardFromHand(card);
+            }
+        });
 
         this.notify();
     }
@@ -228,6 +232,7 @@ export class DurakGameClient {
     reset(): void {
         this.state = {
             myBox: undefined,
+            table: undefined,
             hand: [],
             availables: [],
             turns: [],

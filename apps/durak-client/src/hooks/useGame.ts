@@ -3,7 +3,7 @@ import { XmlParser } from "@updau/protocol";
 import { TransportLike } from "@updau/core";
 import { DurakGameClient, DurakGameController } from "@updau/durak";
 
-export function useGame(transport: TransportLike, enabled: boolean) {
+export function useGame(transport: TransportLike, enabled: boolean, activePub?: string | null) {
     const [client] = useState(() => new DurakGameClient());
     const [, setTick] = useState(0);
 
@@ -38,6 +38,15 @@ export function useGame(transport: TransportLike, enabled: boolean) {
         controller.attach();
         return () => controller.detach();
     }, [controller, enabled]);
+
+    useEffect(() => {
+        if (!enabled) {
+            controller.setActivePub(undefined);
+            return;
+        }
+
+        controller.setActivePub(activePub);
+    }, [activePub, controller, enabled]);
 
     return { client, controller };
 }

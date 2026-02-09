@@ -9,6 +9,9 @@ type Props = {
 };
 
 export function PlayField({ turns, onAttackCardClick, selectedAttackCard, selectableAttackCards }: Props) {
+    const visibleTurns = turns.filter((turn) =>
+        Boolean(turn.attackCard || turn.card || turn.defendCard)
+    );
     const isAttackSelectable = (card?: Card) =>
         Boolean(
             card &&
@@ -18,7 +21,7 @@ export function PlayField({ turns, onAttackCardClick, selectedAttackCard, select
 
     return (
         <div className="play-field">
-            {turns.map((turn, index) => (
+            {visibleTurns.map((turn, index) => (
                 <div key={index} className={`turn${turn.defendCard ? " paired" : ""}`}>
                     {(turn.attackCard || turn.card) && (
                         <div className="turn-attack">

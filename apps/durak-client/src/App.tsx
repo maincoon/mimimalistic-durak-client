@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useReducer, useRef } from "react";
-import { MessageType, XmlParser } from "@updau/protocol";
+import { LeaveCommand, MessageType, XmlParser } from "@updau/protocol";
 import { ConnectionState } from "@updau/transport";
 import { StateRecovery } from "@updau/core";
 import { AvailableActionType, TurnAction } from "@updau/durak";
@@ -24,7 +24,7 @@ export function App() {
         transport,
         connectionState === ConnectionState.CONNECTED
     );
-    const { channelPub, openChannel, error: channelError } = useChannel(
+    const { channelPub, openChannel, clearChannel, error: channelError } = useChannel(
         transport,
         Boolean(sessionInfo),
         sessionInfo?.token
@@ -36,7 +36,8 @@ export function App() {
     );
     const { client, controller } = useGame(
         transport,
-        connectionState === ConnectionState.CONNECTED
+        connectionState === ConnectionState.CONNECTED,
+        channelPub
     );
 
     const parser = useMemo(() => new XmlParser(), []);
@@ -129,12 +130,23 @@ export function App() {
             actions.forEach((action) => {
                 if (action.cmd === "gameover") {
                     const myBox = client.state.myBox;
+                    let result: "win" | "loss" | "draw" | undefined;
+
                     if (myBox !== undefined) {
                         const myResult = action.element.querySelector(`box[id="${myBox}"]`);
                         if (myResult) {
                             const place = myResult.getAttribute("place");
-                            dispatch({ type: "SET_RESULT", result: place === "1" ? "win" : "loss" });
+                            result = place === "1" ? "win" : "loss";
                         }
+                    }
+
+                    if (!result) {
+                        result = client.state.hand.length === 0 ? "win" : "loss";
+                        console.warn("[app] falling back to hand count result", result, { hand: client.state.hand.length, myBox });
+                    }
+
+                    if (result) {
+                        dispatch({ type: "SET_RESULT", result });
                     }
                     dispatch({ type: "SET_STATE", state: AppState.GAME_OVER });
                 }
@@ -215,6 +227,11 @@ export function App() {
                 <GameOverScreen
                     result={model.gameResult}
                     onRetry={() => {
+                        if (channelPub) {
+                            transport.send(LeaveCommand.build(channelPub));
+                        }
+                        clearChannel();
+                        controller.setActivePub(undefined);
                         client.reset();
                         dispatch({ type: "SET_STATE", state: AppState.CONNECTING });
                         openChannel()

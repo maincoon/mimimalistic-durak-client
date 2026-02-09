@@ -125,6 +125,10 @@
     top: 16px;
 }
 
+.turn:not(.paired) .turn-attack {
+    top: 0;
+}
+
 .turn-defend {
     position: absolute;
     left: 18px;

@@ -9,6 +9,10 @@ export function useChannel(transport: TransportLike, enabled: boolean, token?: s
     const parser = useMemo(() => new XmlParser(), []);
     const manager = useMemo(() => new ChannelManager(transport, parser), [parser, transport]);
 
+    const clearChannel = () => {
+        setChannelPub(null);
+    };
+
     const openChannel = (pub?: string) => {
         setError(null);
         return manager
@@ -26,5 +30,5 @@ export function useChannel(transport: TransportLike, enabled: boolean, token?: s
             });
     };
 
-    return { channelPub, error, openChannel };
+    return { channelPub, error, openChannel, clearChannel };
 }

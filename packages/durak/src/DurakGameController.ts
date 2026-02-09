@@ -17,6 +17,7 @@ export class DurakGameController {
     private transport: TransportLike;
     private parser: XmlParser;
     private client: DurakGameClient;
+    private activePub?: string;
 
     constructor(transport: TransportLike, parser: XmlParser, client: DurakGameClient) {
         this.transport = transport;
@@ -40,11 +41,18 @@ export class DurakGameController {
         this.transport.send(ReadyCommand.build(pub));
     }
 
+    setActivePub(pub?: string | null): void {
+        this.activePub = pub ?? undefined;
+    }
+
     private handleMessage = (payload: { data: string }): void => {
         const message = this.parser.parse(payload.data);
         const actions = this.unpackActions(message);
 
         actions.forEach((action) => {
+            if (this.activePub && action.pub && action.pub !== this.activePub) {
+                return;
+            }
             if (action.cmd === "open") {
                 this.applySnapshot(action.element);
                 return;
