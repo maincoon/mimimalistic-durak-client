@@ -85,7 +85,6 @@ build-*/
 # Package manager files that SHOULD be tracked are NOT ignored (lockfiles, package.json)
 # Keep project/CI config and docs
 !.github/
-/docs/
 # IDE test helpers
 .vscode-test/
 # OS-specific trash
